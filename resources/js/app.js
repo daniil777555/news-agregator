@@ -1,17 +1,23 @@
-require('./bootstrap');
-let btnMoreCollection = document.querySelectorAll(".more-text");
-btnMoreCollection.forEach(el => {
-  if(el.previousElementSibling.clientHeight < 100) el.style.display = "none"
-  el.addEventListener("click", showMoreText);
-  
-});
+const { News } = require("./News");
 
-function showMoreText(event){
-  if(event.target.innerHTML === "More"){
-    event.target.innerHTML = "Less"
-    event.target.previousElementSibling.style.maxHeight = "max-content";
-  } else{
-    event.target.innerHTML = "More"
-    event.target.previousElementSibling.style.maxHeight = "100px";
-  }
+export class App {
+    constructor() {
+
+		this.main();
+		this.news = new News();
+	}
+
+    main() {
+        window.onload = function () {
+			if(!sessionStorage.getItem('hello')){
+				document.querySelector(".hello").style.display = "block";
+				setTimeout(() => {
+					document.querySelector(".hello").style.display = "none";
+					sessionStorage.setItem('hello', 'true');
+				}, 3500)
+				console.log(sessionStorage.getItem('hello'), !sessionStorage.getItem('hello'));
+			}
+		};
+    }
+
 }

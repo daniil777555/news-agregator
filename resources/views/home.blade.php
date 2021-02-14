@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <title>NewsBlog</title>
 </head>
@@ -15,33 +15,47 @@
   <div class="container">
 
     <header class="header">
-      <div class="logo"><h1 class="logo-text">NewsBlog</h1></div>
+      <div class="logo"><a href="/" class="logo-text">NewsBlog</a></div>
     </header>
 
     <div class="wrapper">
       <main class="news-block">
-        <div class="new-block">
-          <!-- If exists img -->
-          <div class="new-img">IMG</div>
-          <h3 class="new-title">Title</h3>
-          <p class="new-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, sunt. Animi aliquam, voluptatum culpa neque nulla esse asperiores, quibusdam cumque repudiandae suscipit quos exercitationem harum tenetur sint! Tenetur maxime pariatur impedit et possimus maiores amet quo, debitis ullam perspiciatis, eius cumque libero corporis rem ducimus? Aliquid temporibus aspernatur harum autem?</p>
-          <span class="more-text">More</span>
-        </div>
-        <div class="new-block">
-          <div class="new-img">IMG</div>
-          <h3 class="new-title">Title</h3>
-          <p class="new-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea numquam aut eveniet, eaque neque reprehenderit blanditiis suscipit mollitia autem commodi eligendi nihil! Perspiciatis vero quo voluptates dignissimos veniam deleniti voluptate nisi assumenda nulla soluta consequuntur veritatis id eum error molestiae, maiores accusamus. Placeat assumenda deserunt fuga saepe culpa modi aspernatur sint reprehenderit labore laboriosam asperiores est autem debitis adipisci incidunt eos minus minima unde iure, at impedit blanditiis, amet quo recusandae? Consectetur illo officiis sunt maxime ipsam tenetur quibusdam adipisci in atque pariatur nam incidunt temporibus doloremque nesciunt provident dolor, debitis esse saepe, illum ullam eum quis asperiores consequatur consequuntur.</p>
-          <span class="more-text">More</span>
-        </div>
-        <div class="new-block">
-          <div class="new-img">IMG</div>
-          <h3 class="new-title">Title</h3>
-          <p class="new-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos dicta fuga nemo deserunt ab sed nihil eaque consequuntur. Doloremque mollitia placeat assumenda odio ipsam aperiam impedit amet expedita, nostrum vitae.</p>
-          <span class="more-text">More</span>
-        </div>
+		<div class="filter">
+			<select class="select-sort"> 
+				<option value="sortDate=newest" class="select-sort-option newest">Newest</option>
+				<option value="sortDate=oldest" class="select-sort-option oldest">Oldest</option>
+			</select>
+			<form action="" class="search-form" method="get">
+				<input type="text" name="hashtag" class="input-hashtag" placeholder="Enter hashtag or title" >
+				<button type="submit" class="btn-search"><i class="fas fa-search"></i></button>
+			</form>
+		</div>
+		@if (count($news) === 0)
+			<h1 class="not-found-news">Such news is not found</h1>
+		@endif
+		@foreach($news as $new)
+			<div class="new-block">
+			<!-- If exists img -->
+			@foreach($new["images"] as $img)
+				<img src="{{ $img }}" alt="" class="new-img">
+			@endforeach
+			<h3 class="new-title">{{ $new["title"] }}</h3>
+			<p class="new-text">{{ $new["newBody"] }}</p>
+			<span class="more-text">More</span>
+			<p class="hashtag">
+			@foreach($new["hashtags"] as $hashtag)
+				<a href="/?hashtag={{ $hashtag }}" class="hashtag-link">#{{ $hashtag }}</a>
+			@endforeach
+			</p>
+			<span class="date-new">{{ $new["date"] }}</span>
+			</div>
+		@endforeach
+        
       </main>
+      <div class="hello">
+        <h3 class="hello-text">Hey BRUH <i class="far fa-smile"></i></h3>
+      </div>
     </div>
-
   </div>
 <script src="js/app.js"></script>
 </body>
