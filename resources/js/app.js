@@ -15,7 +15,6 @@ export class App {
 					document.querySelector(".hello").style.display = "none";
 					sessionStorage.setItem('hello', 'true');
 				}, 3500)
-				console.log(sessionStorage.getItem('hello'), !sessionStorage.getItem('hello'));
 			}
 		};
     }

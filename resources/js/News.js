@@ -6,7 +6,9 @@ export class News {
 
 	init(){
 		this.dateSelector();
+
 		document.querySelector(".select-sort").addEventListener("change", this.sortByDate);
+
 		this.btnMoreCollection.forEach((el) => {
 			if (el.previousElementSibling.clientHeight < 100) el.style.display = "none";
 			el.addEventListener("click", this.showOrHideMore);
@@ -27,7 +29,9 @@ export class News {
 		let reg = /\?/gmi;
 		let reg2 = /sortDate.+?(?=&)|sortDate.+$/gmi;
 
-		//This code change sortDate value, because without this, it will be concatenating of requests of sortDate, indeed if there was request with sortDate
+		//This code change sortDate value, 
+		//because without this, it will be concatenating of requests of sortDate, 
+		//indeed if there was request with sortDate
 		if(reg2.test(window.location.href)){  
 			window.location.href = window.location.href.replace(reg2, event.target.value)
 			return
@@ -50,4 +54,5 @@ export class News {
 			document.querySelector(`.${selectOption}`).setAttribute("selected", "selected");
 		}
 	}
+
 }

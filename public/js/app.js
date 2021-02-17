@@ -1872,7 +1872,6 @@ var App = /*#__PURE__*/function () {
             document.querySelector(".hello").style.display = "none";
             sessionStorage.setItem('hello', 'true');
           }, 3500);
-          console.log(sessionStorage.getItem('hello'), !sessionStorage.getItem('hello'));
         }
       };
     }
@@ -1935,7 +1934,9 @@ var News = /*#__PURE__*/function () {
     key: "sortByDate",
     value: function sortByDate(event) {
       var reg = /\?/gmi;
-      var reg2 = /sortDate.+?(?=&)|sortDate.+$/gmi; //This code change sortDate value, because without this, it will be concatenating of requests of sortDate, indeed if there was request with sortDate
+      var reg2 = /sortDate.+?(?=&)|sortDate.+$/gmi; //This code change sortDate value, 
+      //because without this, it will be concatenating of requests of sortDate, 
+      //indeed if there was request with sortDate
 
       if (reg2.test(window.location.href)) {
         window.location.href = window.location.href.replace(reg2, event.target.value);

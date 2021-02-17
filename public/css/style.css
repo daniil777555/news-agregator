@@ -4,6 +4,10 @@
     margin: 0 auto;
 }
 
+a{
+    text-decoration: none;
+}
+
 .header {
     font-family: "Big Shoulders Display", cursive;
     text-align: center;
@@ -34,6 +38,7 @@
     position: relative;
     width: 1200px;
     min-height: 100vh;
+    padding: 25px 40px;
     box-sizing: border-box;
     border-left: 5px solid rgb(3, 242, 255);
     border-right: 5px solid rgb(3, 242, 255);
@@ -176,6 +181,7 @@
 }
 
 .hashtag-link {
+    cursor: pointer;
     text-decoration: none;
     color: blue;
 }
@@ -201,28 +207,109 @@
 }
 
 .adm-container{
-    width: 350px;
+    width: 1200px;
     margin: 0 auto;
     padding: 0;
 }
 
-.adm-login-form{
-    padding: 75px 20px 0 20px;
+.adm-form{
+    padding: 50px 20px 0 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
 }
 
-.adm-login-form-label{
+.adm-form-label{
     text-align: left;
     font-size: 18px;
     margin-bottom: 12px;
 }
 
-.adm-login-form-input{
+.adm-form-input{
     outline: none;
     border: 1px solid rgb(66, 66, 66);
     border-radius: 8px;
-    color: ;
+    color: rgb(116, 114, 114);
+    padding: 8px 10px;
+    font-size: 18px;
+    margin-bottom: 35px;
+}
+
+.adm-form-btn{
+    cursor: pointer;
+    outline: none;
+    background: rgb(47, 66, 175);
+    border: 2px solid rgb(0, 5, 71);
+    border-radius: 8px;
+    color: rgb(255, 255, 255);
+    padding: 10px 12px;
+    font-size: 18px;
+}
+
+.adm-form-btn:hover{
+    background: rgb(3, 23, 134);
+    border-color: rgb(73, 90, 240);
+}
+
+.adm-input-file{
+    cursor:pointer;
+}
+
+.adm-title{
+    font-size: 18px;
+    margin-bottom: 35px;
+    color: rgb(153, 153, 153);
+    font-weight: 400;
+    text-align: center;
+}
+
+.adm-block-link{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home-adm-link{
+    font-size: 18px;
+    margin-bottom: 25px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(16, 46, 145);
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-weight: 400;
+}
+
+.home-adm-link:hover{
+    background-color: rgb(11, 56, 202);
+    border: 1px solid rgb(97, 97, 97);
+}
+
+.change-news-block{
+    display:flex;
+    justify-content: space-between;
+}
+
+.link-news-to-update{
+    font-size: 18px;
+    margin-bottom: 35px;
+    color: rgb(153, 153, 153);
+    font-weight: 400;
+}
+
+.delete-news{
+    font-size: 18px;
+    margin-bottom: 25px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(243, 0, 0);
+    border: 1px solid rgb(58, 10, 10);
+    border-radius: 50%;
+    padding: 8px 14px;
+    font-weight: 400;
+}
+
+.delete-news:hover{
+    background-color: rgb(172, 5, 5);
+    border: 1px solid rgb(124, 26, 26);
 }

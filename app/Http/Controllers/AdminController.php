@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Config;
 
 class AdminController extends Controller
 {
@@ -29,7 +30,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view("administration/admAddNews");
     }
 
     /**
@@ -60,9 +61,9 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        return view("administration/admChangeNewsMain", ["news" => Config::get("newsArray")]);
     }
 
     /**
@@ -74,7 +75,10 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return view("administration/admChangeNews", [
+            "new" => Config::get("newsArray")[$id],
+            "hashtag" => implode(Config::get("newsArray")[$id]["hashtags"], " "),
+            ]);
     }
 
     /**
