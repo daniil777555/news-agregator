@@ -7,6 +7,7 @@
 @section("content")
 
     <form action="#" class="adm-form form-add-news" method="post">
+        @csrf
         <label for="images" class="adm-form-label add-news-label">Add images</label>
         <input type="file" name="images" id="images" class="adm-form-input adm-input-file">
 

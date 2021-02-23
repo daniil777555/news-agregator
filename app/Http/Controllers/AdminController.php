@@ -14,13 +14,13 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view("administration/admHome");
+        return view("administration.admHome");
     }
 
 
     public function login()
     {
-        return view("administration/admLogin");
+        return view("administration.admLogin");
     }
 
     /**
@@ -30,7 +30,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view("administration/admAddNews");
+        return view("administration.admAddNews");
     }
 
     /**
@@ -46,13 +46,18 @@ class AdminController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
+     * 
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        if(isset(Config::get("newsArray")[$id])){
+            return view("administration.admChangeNews", [
+                "new" => Config::get("newsArray")[$id],
+                "hashtag" => implode(Config::get("newsArray")[$id]["hashtags"], " "),
+                ]);
+        }
     }
 
     /**
@@ -61,9 +66,14 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        return view("administration/admChangeNewsMain", ["news" => Config::get("newsArray")]);
+        //
+    }
+
+    public function newsForChange()
+    {
+        return view("administration.admChangeNewsMain", ["news" => Config::get("newsArray")]);
     }
 
     /**
@@ -75,10 +85,7 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return view("administration/admChangeNews", [
-            "new" => Config::get("newsArray")[$id],
-            "hashtag" => implode(Config::get("newsArray")[$id]["hashtags"], " "),
-            ]);
+        //
     }
 
     /**
@@ -89,6 +96,12 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        dd($id);
     }
+
+    public function upload()
+    {
+        return view("administration.admUploadStrangeNews");
+    }
+
 }

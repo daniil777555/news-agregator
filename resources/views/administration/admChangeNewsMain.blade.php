@@ -8,11 +8,12 @@
 
     @foreach($news as $key => $new)
         <div class="change-news-block">
-            <a href="{{ route('administration.changeNews', ['id' => $key]) }}" class="link-news-to-update">
+            <a href="{{ route('administration.show', ['id' => $key]) }}" class="link-news-to-update">
                 {{ $new['title'] }} {{ $new['date'] }}
             </a> 
-            <a href="{{ route('administration.delete', ['id' => $key]) }}" class="delete-news">X</a>
+            
+            {{-- Тут почему-то не происходит переход на destroy, а наоборот переходит на show--}}
+            <a href="{{ route('administration.destroy', ['id' => $key]) }}" class="delete-news">X</a>
         </div>
     @endforeach
 
-@endsection

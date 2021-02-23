@@ -16,18 +16,18 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-Route::get('/',  [NewsController::class, 'index']);
+Route::resource('',  NewsController::class);
 
 Route::group(['prefix' => 'administration', 'as' => 'administration.'], function() {
-	Route::get('/login', [AdminController::class, "login"]);
-    Route::get('/', [AdminController::class, "index"]);
-    Route::get('/add', [AdminController::class, "create"])
-        ->name("add");
-    Route::get('/change', [AdminController::class, "edit"])
+
+    Route::get('/change', [AdminController::class, "newsForChange"])
         ->name("change");
-    Route::get('/changeNews/{id}', [AdminController::class, "update"]) 
-        ->name("changeNews");
-    Route::get('/delete/{id}', [AdminController::class, "destroy"]) 
-        ->name("delete");
+    Route::get('/upload', [AdminController::class, "upload"])
+       ->name("upload");
+    Route::get('/login', [AdminController::class, "login"])
+        ->name("login");
+    Route::resource('/', AdminController::class, ['parameters' => [
+        '' => 'id'
+    ]]);
 });
 
