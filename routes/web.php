@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
+Route::get('/', [NewsController::class, "index"]);
+
+Route::group(['prefix' => 'administration', 'as' => 'administration.'], function() {
+
+    Route::get('/change', [AdminController::class, "newsForChange"])
+        ->name("change");
+    Route::get('/upload', [AdminController::class, "upload"])
+       ->name("upload");
+    Route::get('/login', [AdminController::class, "login"])
+        ->name("login");
+    Route::get('/delete/{id}', [AdminController::class, "destroy"])
+        ->name("delete");
+    Route::resource('/', AdminController::class, ['parameters' => [
+        '' => 'id'
+    ]]);
 });
+
