@@ -22,8 +22,8 @@
         <main class="main-block">
             <div class="filter">
                 <select class="select-sort"> 
-                    <option value="sortDate=newest" class="select-sort-option newest">Newest</option>
-                    <option value="sortDate=oldest" class="select-sort-option oldest">Oldest</option>
+                    <option value="date=newest" class="select-sort-option newest">Newest</option>
+                    <option value="date=oldest" class="select-sort-option oldest">Oldest</option>
                 </select>
                 <form action="" class="search-form" method="get">
                     <input type="text" name="hashtag" class="input-hashtag" placeholder="Enter hashtag or title" >

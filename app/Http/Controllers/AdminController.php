@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Config;
+use App\Models\DataBaseModel;
 
 class AdminController extends Controller
 {
@@ -50,13 +50,13 @@ class AdminController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, DataBaseModel $DBModel)
     {
-        if(isset(Config::get("newsArray")[$id])){
+        if(isset($DBModel->getArray()[$id])){
             return view("administration.admChangeNews", [
-                "new" => Config::get("newsArray")[$id],
-                "hashtag" => implode(Config::get("newsArray")[$id]["hashtags"], " "),
-                ]);
+                "new" => $DBModel->getArray()[$id],
+                "hashtag" => implode($DBModel->getArray()[$id]["hashtags"], " "),
+            ]);
         }
     }
 
@@ -71,9 +71,9 @@ class AdminController extends Controller
         //
     }
 
-    public function newsForChange()
+    public function newsForChange(DataBaseModel $DBModel)
     {
-        return view("administration.admChangeNewsMain", ["news" => Config::get("newsArray")]);
+        return view("administration.admChangeNewsMain", ["news" => $DBModel->getArray()]);
     }
 
     /**
@@ -94,9 +94,11 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, DataBaseModel $DBModel)
     {
-        dd($id);
+        $DBModel->deleteNews($id);
+        return view("administration.admChangeNewsMain", ["news" => $DBModel->getArray()]);
+        
     }
 
     public function upload()

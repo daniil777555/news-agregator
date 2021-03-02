@@ -16,7 +16,7 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-Route::resource('',  NewsController::class);
+Route::get('/', [NewsController::class, "index"]);
 
 Route::group(['prefix' => 'administration', 'as' => 'administration.'], function() {
 
@@ -26,6 +26,8 @@ Route::group(['prefix' => 'administration', 'as' => 'administration.'], function
        ->name("upload");
     Route::get('/login', [AdminController::class, "login"])
         ->name("login");
+    Route::get('/delete/{id}', [AdminController::class, "destroy"])
+        ->name("delete");
     Route::resource('/', AdminController::class, ['parameters' => [
         '' => 'id'
     ]]);

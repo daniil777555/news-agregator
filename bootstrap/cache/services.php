@@ -27,14 +27,17 @@
     23 => 'Facade\\Ignition\\IgnitionServiceProvider',
     24 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
     25 => 'Fruitcake\\Cors\\CorsServiceProvider',
-    26 => 'Laravel\\Sail\\SailServiceProvider',
-    27 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    28 => 'Carbon\\Laravel\\ServiceProvider',
-    29 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    30 => 'App\\Providers\\AppServiceProvider',
-    31 => 'App\\Providers\\AuthServiceProvider',
-    32 => 'App\\Providers\\EventServiceProvider',
-    33 => 'App\\Providers\\RouteServiceProvider',
+    26 => 'Jenssegers\\Mongodb\\MongodbServiceProvider',
+    27 => 'Jenssegers\\Mongodb\\MongodbQueueServiceProvider',
+    28 => 'Laravel\\Sail\\SailServiceProvider',
+    29 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    30 => 'Carbon\\Laravel\\ServiceProvider',
+    31 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    32 => 'Jenssegers\\Mongodb\\MongodbServiceProvider',
+    33 => 'App\\Providers\\AppServiceProvider',
+    34 => 'App\\Providers\\AuthServiceProvider',
+    35 => 'App\\Providers\\EventServiceProvider',
+    36 => 'App\\Providers\\RouteServiceProvider',
   ),
   'eager' => 
   array (
@@ -52,12 +55,14 @@
     11 => 'Facade\\Ignition\\IgnitionServiceProvider',
     12 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
     13 => 'Fruitcake\\Cors\\CorsServiceProvider',
-    14 => 'Carbon\\Laravel\\ServiceProvider',
-    15 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    16 => 'App\\Providers\\AppServiceProvider',
-    17 => 'App\\Providers\\AuthServiceProvider',
-    18 => 'App\\Providers\\EventServiceProvider',
-    19 => 'App\\Providers\\RouteServiceProvider',
+    14 => 'Jenssegers\\Mongodb\\MongodbServiceProvider',
+    15 => 'Carbon\\Laravel\\ServiceProvider',
+    16 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    17 => 'Jenssegers\\Mongodb\\MongodbServiceProvider',
+    18 => 'App\\Providers\\AppServiceProvider',
+    19 => 'App\\Providers\\AuthServiceProvider',
+    20 => 'App\\Providers\\EventServiceProvider',
+    21 => 'App\\Providers\\RouteServiceProvider',
   ),
   'deferred' => 
   array (
@@ -164,11 +169,11 @@
     'mailer' => 'Illuminate\\Mail\\MailServiceProvider',
     'Illuminate\\Mail\\Markdown' => 'Illuminate\\Mail\\MailServiceProvider',
     'Illuminate\\Contracts\\Pipeline\\Hub' => 'Illuminate\\Pipeline\\PipelineServiceProvider',
-    'queue' => 'Illuminate\\Queue\\QueueServiceProvider',
-    'queue.connection' => 'Illuminate\\Queue\\QueueServiceProvider',
-    'queue.failer' => 'Illuminate\\Queue\\QueueServiceProvider',
-    'queue.listener' => 'Illuminate\\Queue\\QueueServiceProvider',
-    'queue.worker' => 'Illuminate\\Queue\\QueueServiceProvider',
+    'queue' => 'Jenssegers\\Mongodb\\MongodbQueueServiceProvider',
+    'queue.connection' => 'Jenssegers\\Mongodb\\MongodbQueueServiceProvider',
+    'queue.failer' => 'Jenssegers\\Mongodb\\MongodbQueueServiceProvider',
+    'queue.listener' => 'Jenssegers\\Mongodb\\MongodbQueueServiceProvider',
+    'queue.worker' => 'Jenssegers\\Mongodb\\MongodbQueueServiceProvider',
     'redis' => 'Illuminate\\Redis\\RedisServiceProvider',
     'redis.connection' => 'Illuminate\\Redis\\RedisServiceProvider',
     'auth.password' => 'Illuminate\\Auth\\Passwords\\PasswordResetServiceProvider',
@@ -217,6 +222,9 @@
     array (
     ),
     'Illuminate\\Validation\\ValidationServiceProvider' => 
+    array (
+    ),
+    'Jenssegers\\Mongodb\\MongodbQueueServiceProvider' => 
     array (
     ),
     'Laravel\\Sail\\SailServiceProvider' => 

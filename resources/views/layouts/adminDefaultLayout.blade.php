@@ -20,8 +20,8 @@
 
         <div class="wrapper">
             <h3 class="adm-title">@yield('title')</h3>
-            @yield('content')
 
+            @yield("content")
         </div>
         
     </div>

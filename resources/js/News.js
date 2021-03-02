@@ -27,11 +27,11 @@ export class News {
 
 	sortByDate(event){
 		let reg = /\?/gmi;
-		let reg2 = /sortDate.+?(?=&)|sortDate.+$/gmi;
+		let reg2 = /date.+?(?=&)|date.+$/gmi;
 
-		//This code change sortDate value, 
-		//because without this, it will be concatenating of requests of sortDate, 
-		//indeed if there was request with sortDate
+		//This code change date value, 
+		//because without this, it will be concatenating of requests of date, 
+		//indeed if there was request with date
 		if(reg2.test(window.location.href)){  
 			window.location.href = window.location.href.replace(reg2, event.target.value)
 			return
@@ -45,9 +45,9 @@ export class News {
 	}
 
 	dateSelector(){  // This code saves the value of selector after updating page
-		let reg = /sortDate.+?(?=&)|sortDate.+$/gmi;
+		let reg = /date.+?(?=&)|date.+$/gmi;
 
-		//Take url, matched with reg and divide on sortDate and option, returns option name, and searching tag which must be changed
+		//Take url, matched with reg and divide on date and option, returns option name, and searching tag which must be changed
 		let selectOption = window.location.href.match(reg);
 		 if(selectOption){
 			selectOption = selectOption[0].split("=")[1];

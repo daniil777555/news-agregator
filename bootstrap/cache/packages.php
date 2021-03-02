@@ -35,6 +35,14 @@
       0 => 'Fruitcake\\Cors\\CorsServiceProvider',
     ),
   ),
+  'jenssegers/mongodb' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Jenssegers\\Mongodb\\MongodbServiceProvider',
+      1 => 'Jenssegers\\Mongodb\\MongodbQueueServiceProvider',
+    ),
+  ),
   'laravel/sail' => 
   array (
     'providers' => 
