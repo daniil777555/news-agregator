@@ -26,8 +26,8 @@ Route::group(['prefix' => 'administration', 'as' => 'administration.'], function
        ->name("upload");
     Route::get('/login', [AdminController::class, "login"])
         ->name("login");
-    Route::get('/delete/{id}', [AdminController::class, "destroy"])
-        ->name("delete");
+    Route::get('/delImg/{elId}/{imgId}', [AdminController::class, "deleteImg"])
+        ->name("del-img");
     Route::resource('/', AdminController::class, ['parameters' => [
         '' => 'id'
     ]]);

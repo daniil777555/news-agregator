@@ -30,11 +30,21 @@ class DataBaseModel extends Model
         $this->array = self::all();
     }
 
+    public function updateNews($id, $data)
+    {
+        self::find($id)->fill($data)->save();
+    }
+
     protected function createDB()
     {
         foreach(Config::get("newsArray") as $news)
             self::create($news);
 
+    }
+
+    public function addNews($data)
+    {
+        self::insert($data);
     }
 
     protected function deleteCollection()
@@ -48,5 +58,12 @@ class DataBaseModel extends Model
     {
         self::destroy($id);
         $this->setArray();
+    }
+
+    public function deleteImg($elId, $imgId)
+    {
+        $imgArr = self::find($elId)->images;
+        array_splice($imgArr, $imgId, 1);
+        self::find($elId)->update(["images" => $imgArr]);
     }
 }

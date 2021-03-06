@@ -299,6 +299,7 @@ a{
 }
 
 .delete-news{
+    cursor: pointer;
     font-size: 18px;
     margin-bottom: 25px;
     color: rgb(255, 255, 255);
@@ -312,4 +313,34 @@ a{
 .delete-news:hover{
     background-color: rgb(172, 5, 5);
     border: 1px solid rgb(124, 26, 26);
+}
+
+.image-delete{
+    width: 200px;
+    position: relative;
+}
+
+
+.update-img{
+    width: 200px;
+}
+
+.image-delete:hover{
+    filter: brightness(0.4);
+}
+
+.image-delete:hover::after{
+    content: "DELETE";
+    position: absolute;
+    color: #fff;
+    right: 70px;
+    top: 55px;
+    z-index: 2;
+}
+
+.success{
+    color: #fff;
+    background-color: rgb(48, 226, 48);
+    font-size: 26px;
+    text-align: center;
 }

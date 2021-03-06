@@ -19,12 +19,14 @@
         </header>
 
         <div class="wrapper">
+            @if(session()->has('success'))
+                <h3 class="success">{{ session()->get('success') }}</h3>
+            @endif
             <h3 class="adm-title">@yield('title')</h3>
 
             @yield("content")
         </div>
         
     </div>
-<script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

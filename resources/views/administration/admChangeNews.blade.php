@@ -5,9 +5,23 @@
 @endsection
 
 @section("content")
+    <style>
+        
 
-    <form action="#" class="adm-form form-add-news" method="POST">
+
+    </style>
+
+    <form action="{{ route('administration.update', ['id' => $new->id]) }}" class="adm-form form-add-news" method="POST">
         @csrf
+        @method("PUT")
+        @if(count($new->images) > 0) 
+			@foreach($new->images as $key => $img)
+				<a href="{{ route('administration.del-img', ['elId' => $new->id, 'imgId' => $key]) }}" class="image-delete">
+					<img src="{{ $img }}" alt="" class="update-img">
+				</a>
+			@endforeach
+		@endif
+
         <label for="images" class="adm-form-label add-news-label">Add images</label>
         <input type="file" name="images" id="images" class="adm-form-input adm-input-file">
 

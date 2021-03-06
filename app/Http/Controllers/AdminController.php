@@ -39,9 +39,14 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, DataBaseModel $DBModel)
     {
-        //
+        $data = $request->only("title", "newBody", "date");
+        $data["hashtags"] = explode(" " , $request->hashtags);
+        $data["images"] = [];
+        //to do: adding image (work with file system)
+        $DBModel->addNews($data);
+        return back()->with("success", "All is fine");
     }
 
     /**
@@ -83,9 +88,13 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, DataBaseModel $DBModel, $id)
     {
-        //
+        $data = $request->only("title", "newBody", "date");
+        $data["hashtags"] = explode(" " , $request->hashtags);
+        //to do: adding image (work with file system)
+        $DBModel->updateNews($id, $data);
+        return back()->with("success", "All is fine");
     }
 
     /**
@@ -99,6 +108,12 @@ class AdminController extends Controller
         $DBModel->deleteNews($id);
         return view("administration.admChangeNewsMain", ["news" => $DBModel->getArray()]);
         
+    }
+
+    public function deleteImg($elId, $imgId, DataBaseModel $DBModel)
+    {
+        $DBModel->deleteImg($elId, $imgId);
+        return back();
     }
 
     public function upload()
