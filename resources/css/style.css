@@ -355,4 +355,5 @@ a{
     color: rgb(95, 0, 0);
     font-size: 26px;
     font-weight: 400;
+    list-style: none;
 }
