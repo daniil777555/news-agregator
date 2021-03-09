@@ -24,6 +24,16 @@
             @endif
             <h3 class="adm-title">@yield('title')</h3>
 
+            @if ($errors->any())
+                <div class="errors-block">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li class="error-item">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             @yield("content")
         </div>
         

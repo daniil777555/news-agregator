@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use \App\Http\Requests\AddNewsRequest;
+use \App\Http\Requests\ChangeNewsRequest;
+use \App\Http\Requests\AdminLoginRequest;
 use App\Models\DataBaseModel;
 
 class AdminController extends Controller
@@ -18,7 +20,7 @@ class AdminController extends Controller
     }
 
 
-    public function login()
+    public function login(AdminLoginRequest $request)
     {
         return view("administration.admLogin");
     }
@@ -39,10 +41,10 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, DataBaseModel $DBModel)
+    public function store(AddNewsRequest $request, DataBaseModel $DBModel)
     {
-        $data = $request->only("title", "newBody", "date");
-        $data["hashtags"] = explode(" " , $request->hashtags);
+        $data = $request->validated()->only("title", "newBody", "date");
+        $data["hashtags"] = explode(" " , $request->validated()->hashtags);
         $data["images"] = [];
         //to do: adding image (work with file system)
         $DBModel->addNews($data);
@@ -88,10 +90,10 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DataBaseModel $DBModel, $id)
+    public function update(ChangeNewsRequest $request, DataBaseModel $DBModel, $id)
     {
-        $data = $request->only("title", "newBody", "date");
-        $data["hashtags"] = explode(" " , $request->hashtags);
+        $data = $request->validated()->only("title", "newBody", "date");
+        $data["hashtags"] = explode(" " , $request->validated()->hashtags);
         //to do: adding image (work with file system)
         $DBModel->updateNews($id, $data);
         return back()->with("success", "All is fine");

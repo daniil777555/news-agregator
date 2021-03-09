@@ -342,5 +342,17 @@ a{
     color: #fff;
     background-color: rgb(48, 226, 48);
     font-size: 26px;
+    font-weight: 400;
     text-align: center;
+}
+
+.errors-block{
+    background-color: rgb(235, 98, 98);
+    text-align: center;
+}
+
+.error-item{
+    color: rgb(95, 0, 0);
+    font-size: 26px;
+    font-weight: 400;
 }
