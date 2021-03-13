@@ -355,4 +355,20 @@ a{
     color: rgb(95, 0, 0);
     font-size: 26px;
     font-weight: 400;
+    list-style: none;
+}
+
+.logout-wrapper{
+    text-align: right;
+}
+
+.btn-logout{
+    background-color: rgb(235, 98, 98);
+    border-color: rgb(170, 54, 0);
+    color:#fff
+}
+
+.btn-logout:hover{
+    background-color: rgb(235, 69, 69);
+    border-color: rgb(207, 79, 20);
 }

@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
+use App\Http\Middleware\IsAuthenticate;
+use App\Http\Middleware\CheckStatus;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AdminController;
 
@@ -18,18 +19,35 @@ use App\Http\Controllers\AdminController;
 
 Route::get('/', [NewsController::class, "index"]);
 
-Route::group(['prefix' => 'administration', 'as' => 'administration.'], function() {
+Route::middleware([IsAuthenticate::class])->group(function () { //Unforchunetly, but this only one case when it works
 
-    Route::get('/change', [AdminController::class, "newsForChange"])
-        ->name("change");
-    Route::get('/upload', [AdminController::class, "upload"])
-       ->name("upload");
-    Route::get('/login', [AdminController::class, "login"])
-        ->name("login");
-    Route::get('/delImg/{elId}/{imgId}', [AdminController::class, "deleteImg"])
-        ->name("del-img");
-    Route::resource('/', AdminController::class, ['parameters' => [
-        '' => 'id'
-    ]]);
+    Route::get('/login', [AdminController::class, "loginPage"])
+        ->middleware('guest')
+        ->withoutMiddleware([IsAuthenticate::class])
+        ->name("administration.login");
+    
+    Route::post('/login', [AdminController::class, "login"])
+        ->name("administration.login")
+        ->withoutMiddleware([IsAuthenticate::class]); 
+
+    Route::group(['prefix' => 'administration', 'as' => 'administration.'], function() {
+
+        Route::get('/change', [AdminController::class, "newsForChange"])
+            ->name("change");
+    
+        Route::get('/upload', [AdminController::class, "upload"])
+           ->name("upload");
+    
+        Route::get("/logout", [AdminController::class, "logout"])
+            ->name("logout");
+    
+        Route::get('/delImg/{elId}/{imgId}', [AdminController::class, "deleteImg"])
+            ->name("del-img");
+    
+        Route::resource('/', AdminController::class, ['parameters' => [
+            '' => 'id'
+        ]])->middleware(CheckStatus::class);
+    });
 });
+
 

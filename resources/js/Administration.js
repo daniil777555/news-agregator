@@ -5,7 +5,7 @@ export class Administration{
 
     init(){
         document.querySelectorAll(".delete-news")
-            .forEach(el => el.addEventListener("click", this.deleteNews));
+            .forEach(el => el.addEventListener("click", this.deleteNews)); 
     }
 
 

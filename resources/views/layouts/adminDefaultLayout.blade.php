@@ -19,9 +19,16 @@
         </header>
 
         <div class="wrapper">
+            @if(session()->has('login'))
+                <div class="logout-wrapper">
+                    <a href="{{ route('administration.logout') }}" class="adm-form-btn btn-logout">Logout</a>
+                </div>
+            @endif
+            
             @if(session()->has('success'))
                 <h3 class="success">{{ session()->get('success') }}</h3>
             @endif
+
             <h3 class="adm-title">@yield('title')</h3>
 
             @if ($errors->any())

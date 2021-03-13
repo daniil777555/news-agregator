@@ -6,6 +6,8 @@ use \App\Http\Requests\AddNewsRequest;
 use \App\Http\Requests\ChangeNewsRequest;
 use \App\Http\Requests\AdminLoginRequest;
 use App\Models\DataBaseModel;
+use App\Models\AdminUsersDBModel;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -20,9 +22,26 @@ class AdminController extends Controller
     }
 
 
-    public function login(AdminLoginRequest $request)
+    public function loginPage()
     {
         return view("administration.admLogin");
+    }
+
+    public function login(AdminLoginRequest $request, AdminUsersDBModel $AdmUserDB)
+    { 
+        foreach ($AdmUserDB->getArray() as $el) {
+            if ($el->login === $request->validated()["login"] 
+                && $el->pass === $request->validated()["pass"]) {
+                session(["login" => $request->login, "status" => str_split($el->status)]);
+                return redirect()->route("administration.index");
+            }
+        }
+    }
+
+    public function logout()
+    {
+        session()->forget(['login', 'status']);
+        return redirect()->route("administration.login");
     }
 
     /**
@@ -38,7 +57,7 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\AddNewsRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(AddNewsRequest $request, DataBaseModel $DBModel)
@@ -86,7 +105,7 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ChangeNewsRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

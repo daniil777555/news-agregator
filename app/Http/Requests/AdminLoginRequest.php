@@ -24,8 +24,8 @@ class AdminLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            "admLogin" => ["string", "min:5"],
-            "admPass" => ["string", "min:4", "password"]
+            "login" => ["min:5"],
+            "pass" => ["min:4"]
         ];
     }
 }

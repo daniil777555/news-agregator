@@ -3,13 +3,25 @@
         [
             "login" => "admin",
             "pass" => "1234",
-            "status" => "CRUD"
+            "status" => "CUD"
         ],
 
         [
             "login" => "admin2",
             "pass" => "1234567",
-            "status" => "CRU"
+            "status" => "CU"
+        ],
+
+        [
+            "login" => "admin3",
+            "pass" => "1234",
+            "status" => "CD"
+        ],
+
+        [
+            "login" => "admin4",
+            "pass" => "1234",
+            "status" => "U"
         ],
 
     ];

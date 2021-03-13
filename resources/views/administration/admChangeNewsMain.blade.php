@@ -1,7 +1,7 @@
 @extends('layouts.adminDefaultLayout')
 
 @section("title")
-    Chose news for update 
+    Сhoose news for update 
 @endsection
 
 @section("content")
@@ -11,8 +11,10 @@
         <div class="change-news-block">
             <a href="{{ route('administration.show', ['id' => $key]) }}" class="link-news-to-update">
                 {{ $new->title }} {{ $new->date }}
-            </a> 
-            <button value="{{ $new->id }}" class="delete-news">X</button> 
+            </a>
+            @if(in_array("D", session("status")))
+                <button value="{{ $new->id }}" class="delete-news">X</button>
+            @endif  
         </div>
     @endforeach
 
