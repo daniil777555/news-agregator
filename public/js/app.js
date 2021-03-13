@@ -1834,6 +1834,141 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./resources/js/App.js":
+/*!*****************************!*\
+  !*** ./resources/js/App.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "App": () => (/* binding */ App)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var _require = __webpack_require__(/*! ./News */ "./resources/js/News.js"),
+    News = _require.News;
+
+var App = /*#__PURE__*/function () {
+  function App() {
+    _classCallCheck(this, App);
+
+    this.main();
+    this.news = new News();
+  }
+
+  _createClass(App, [{
+    key: "main",
+    value: function main() {
+      window.onload = function () {
+        if (!sessionStorage.getItem('hello')) {
+          document.querySelector(".hello").style.display = "block";
+          setTimeout(function () {
+            document.querySelector(".hello").style.display = "none";
+            sessionStorage.setItem('hello', 'true');
+          }, 3500);
+        }
+      };
+    }
+  }]);
+
+  return App;
+}();
+
+/***/ }),
+
+/***/ "./resources/js/News.js":
+/*!******************************!*\
+  !*** ./resources/js/News.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "News": () => (/* binding */ News)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var News = /*#__PURE__*/function () {
+  function News() {
+    _classCallCheck(this, News);
+
+    this.btnMoreCollection = document.querySelectorAll(".more-text");
+    this.init();
+  }
+
+  _createClass(News, [{
+    key: "init",
+    value: function init() {
+      var _this = this;
+
+      this.dateSelector();
+      document.querySelector(".select-sort").addEventListener("change", this.sortByDate);
+      this.btnMoreCollection.forEach(function (el) {
+        if (el.previousElementSibling.clientHeight < 100) el.style.display = "none";
+        el.addEventListener("click", _this.showOrHideMore);
+      });
+    }
+  }, {
+    key: "showOrHideMore",
+    value: function showOrHideMore(event) {
+      if (event.target.innerHTML === "More") {
+        event.target.innerHTML = "Less";
+        event.target.previousElementSibling.style.maxHeight = "max-content";
+      } else {
+        event.target.innerHTML = "More";
+        event.target.previousElementSibling.style.maxHeight = "100px";
+      }
+    }
+  }, {
+    key: "sortByDate",
+    value: function sortByDate(event) {
+      var reg = /\?/gmi;
+      var reg2 = /date.+?(?=&)|date.+$/gmi; //This code change date value, 
+      //because without this, it will be concatenating of requests of date, 
+      //indeed if there was request with date
+
+      if (reg2.test(window.location.href)) {
+        window.location.href = window.location.href.replace(reg2, event.target.value);
+        return;
+      }
+
+      if (reg.test(window.location.href)) {
+        window.location += "&" + event.target.value;
+      } else {
+        window.location = "?" + event.target.value;
+      }
+    }
+  }, {
+    key: "dateSelector",
+    value: function dateSelector() {
+      // This code saves the value of selector after updating page
+      var reg = /date.+?(?=&)|date.+$/gmi; //Take url, matched with reg and divide on date and option, returns option name, and searching tag which must be changed
+
+      var selectOption = window.location.href.match(reg);
+
+      if (selectOption) {
+        selectOption = selectOption[0].split("=")[1];
+        document.querySelector(".".concat(selectOption)).setAttribute("selected", "selected");
+      }
+    }
+  }]);
+
+  return News;
+}();
+
+/***/ }),
+
 /***/ "./resources/js/bootstrap.js":
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
@@ -19252,6 +19387,18 @@ process.umask = function() { return 0; };
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -19262,6 +19409,22 @@ process.umask = function() { return 0; };
 /******/ 				if (typeof window === 'object') return window;
 /******/ 			}
 /******/ 		})();
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
@@ -19275,26 +19438,15 @@ process.umask = function() { return 0; };
 /******/ 	
 /************************************************************************/
 (() => {
-/*!*****************************!*\
-  !*** ./resources/js/app.js ***!
-  \*****************************/
+/*!*******************************!*\
+  !*** ./resources/js/index.js ***!
+  \*******************************/
+var _require = __webpack_require__(/*! ./App */ "./resources/js/App.js"),
+    App = _require.App;
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-var btnMoreCollection = document.querySelectorAll(".more-text");
-btnMoreCollection.forEach(function (el) {
-  if (el.previousElementSibling.clientHeight < 100) el.style.display = "none";
-  el.addEventListener("click", showMoreText);
-});
-
-function showMoreText(event) {
-  if (event.target.innerHTML === "More") {
-    event.target.innerHTML = "Less";
-    event.target.previousElementSibling.style.maxHeight = "max-content";
-  } else {
-    event.target.innerHTML = "More";
-    event.target.previousElementSibling.style.maxHeight = "100px";
-  }
-}
+new App();
 })();
 
 /******/ })()
