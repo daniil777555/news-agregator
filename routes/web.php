@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\IsAuthenticate;
+use App\Http\Middleware\CheckStatus;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UploadNewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +18,43 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
+Route::get('/', [NewsController::class, "index"]);
+
+Route::middleware([IsAuthenticate::class])->group(function () { //Unforchunetly, but this only one case when it works
+
+    Route::get('/login', [AdminController::class, "loginPage"])
+        ->middleware('guest')
+        ->withoutMiddleware([IsAuthenticate::class])
+        ->name("administration.login");
+    
+    Route::post('/login', [AdminController::class, "login"])
+        ->name("administration.login")
+        ->withoutMiddleware([IsAuthenticate::class]); 
+
+    Route::group(['prefix' => 'administration', 'as' => 'administration.'], function() {
+
+        Route::get('/change', [AdminController::class, "newsForChange"])
+            ->name("change");
+    
+        Route::get('/addURL', [AdminController::class, "upload"])
+           ->name("addURL");
+
+        Route::get('/logs', [AdminController::class, "showLogs"])
+            ->name("logs");
+    
+        Route::get("/logout", [AdminController::class, "logout"])
+            ->name("logout");
+    
+        Route::get('/delImg/{elId}/{imgId}', [AdminController::class, "deleteImg"])
+            ->name("del-img");
+
+        Route::get('/upload', [UploadNewsController::class, "index"])->name("upload");
+    
+        Route::resource('/', AdminController::class, ['parameters' => [
+            '' => 'id'
+        ]])->middleware(CheckStatus::class);
+    });
+
 });
+
+

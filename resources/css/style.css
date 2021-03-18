@@ -180,13 +180,13 @@ a{
     float: left;
 }
 
-.hashtag-link {
+.link {
     cursor: pointer;
     text-decoration: none;
     color: blue;
 }
 
-.hashtag-link:hover {
+.link:hover {
     text-decoration: underline;
     color: rgb(42, 22, 221);
 }
