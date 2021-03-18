@@ -7,6 +7,10 @@ use \App\Http\Requests\ChangeNewsRequest;
 use \App\Http\Requests\AdminLoginRequest;
 use App\Models\DataBaseModel;
 use App\Models\AdminUsersDBModel;
+use App\Models\Logs;
+use App\Events\Login;
+use App\Events\Logout;
+use App\Events\InteractionWithNews;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -27,19 +31,21 @@ class AdminController extends Controller
         return view("administration.admLogin");
     }
 
-    public function login(AdminLoginRequest $request, AdminUsersDBModel $AdmUserDB)
+    public function login(AdminLoginRequest $request, AdminUsersDBModel $AdmUserDB, Logs $logs)
     { 
         foreach ($AdmUserDB->getArray() as $el) {
             if ($el->login === $request->validated()["login"] 
                 && $el->pass === $request->validated()["pass"]) {
                 session(["login" => $request->login, "status" => str_split($el->status)]);
+                event(new Login($logs, $request->ip()));
                 return redirect()->route("administration.index");
             }
         }
     }
 
-    public function logout()
+    public function logout(Request $request, Logs $logs)
     {
+        event(new Logout($logs, $request->ip()));
         session()->forget(['login', 'status']);
         return redirect()->route("administration.login");
     }
@@ -60,13 +66,14 @@ class AdminController extends Controller
      * @param  \App\Http\Requests\AddNewsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AddNewsRequest $request, DataBaseModel $DBModel)
+    public function store(AddNewsRequest $request, DataBaseModel $DBModel, Logs $logs)
     {
-        $data = $request->validated()->only("title", "newBody", "date");
-        $data["hashtags"] = explode(" " , $request->validated()->hashtags);
+        $data = collect($request->validated())->only("title", "newBody", "date")->toArray();
+        $data["hashtags"] = explode(" " , $request->hashtags);
         $data["images"] = [];
         //to do: adding image (work with file system)
         $DBModel->addNews($data);
+        event(new InteractionWithNews($logs, $request->ip(), $data["title"] ,"Store"));
         return back()->with("success", "All is fine");
     }
 
@@ -81,9 +88,14 @@ class AdminController extends Controller
         if(isset($DBModel->getArray()[$id])){
             return view("administration.admChangeNews", [
                 "new" => $DBModel->getArray()[$id],
-                "hashtag" => implode($DBModel->getArray()[$id]["hashtags"], " "),
+                "hashtag" => implode(" ", $DBModel->getArray()[$id]["hashtags"]),
             ]);
         }
+    }
+
+    public function showLogs(Logs $logs)
+    {
+        return view("administration.admLogsPanel", ["logs" => $logs->getArray()->toArray()]);
     }
 
     /**
@@ -109,12 +121,13 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ChangeNewsRequest $request, DataBaseModel $DBModel, $id)
+    public function update(ChangeNewsRequest $request, DataBaseModel $DBModel, $id, Logs $logs)
     {
-        $data = $request->validated()->only("title", "newBody", "date");
-        $data["hashtags"] = explode(" " , $request->validated()->hashtags);
+        $data = collect($request->validated())->only("title", "newBody", "date")->toArray();
+        $data["hashtags"] = explode(" " , $request->hashtags);
         //to do: adding image (work with file system)
         $DBModel->updateNews($id, $data);
+        event(new InteractionWithNews($logs, $request->ip(), $data["title"] ,"Update"));
         return back()->with("success", "All is fine");
     }
 
@@ -124,9 +137,11 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, DataBaseModel $DBModel)
+    public function destroy($id, DataBaseModel $DBModel, Request $request, Logs $logs)
     {
+        $title = $DBModel::find($id)->title;
         $DBModel->deleteNews($id);
+        event(new InteractionWithNews($logs, $request->ip(), $title, "Delete"));
         return view("administration.admChangeNewsMain", ["news" => $DBModel->getArray()]);
         
     }

@@ -24,7 +24,7 @@ class UploadNewsFromStrangeResourceRequest extends FormRequest
     public function rules()
     {
         return [
-           "link" => ["url", "active_url", "string"]
+           "link" => ["required", "url", "active_url", "string"]
         ];
     }
 }

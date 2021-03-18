@@ -5,6 +5,7 @@ use App\Http\Middleware\IsAuthenticate;
 use App\Http\Middleware\CheckStatus;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UploadNewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,19 +36,25 @@ Route::middleware([IsAuthenticate::class])->group(function () { //Unforchunetly,
         Route::get('/change', [AdminController::class, "newsForChange"])
             ->name("change");
     
-        Route::get('/upload', [AdminController::class, "upload"])
-           ->name("upload");
+        Route::get('/addURL', [AdminController::class, "upload"])
+           ->name("addURL");
+
+        Route::get('/logs', [AdminController::class, "showLogs"])
+            ->name("logs");
     
         Route::get("/logout", [AdminController::class, "logout"])
             ->name("logout");
     
         Route::get('/delImg/{elId}/{imgId}', [AdminController::class, "deleteImg"])
             ->name("del-img");
+
+        Route::get('/upload', [UploadNewsController::class, "index"])->name("upload");
     
         Route::resource('/', AdminController::class, ['parameters' => [
             '' => 'id'
         ]])->middleware(CheckStatus::class);
     });
+
 });
 
 

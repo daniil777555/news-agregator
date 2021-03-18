@@ -21,7 +21,7 @@
         <input type="text" name="hashtags" id="hashtags" class="adm-form-input">
 
         <label for="date" class="adm-form-label add-news-label">Enter date</label>
-        <input type="text" name="date" id="date" class="adm-form-input">
+        <input type="text" name="date" id="date" value="{{ date("d.m.Y") }}" class="adm-form-input">
 
         <button type="submit" class="adm-form-btn">Add new news</button>
     </form>

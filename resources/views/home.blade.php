@@ -23,13 +23,18 @@
 			@endif
 			<h3 class="new-title">{{ $new->title }}</h3>
 			<p class="new-text">{{ $new->newBody }}</p>
+			@if(isset($new->created_by) && isset($new->url))
+				
+				<p class="new-text">Created by {{ $new->created_by }}: <a href="{{ $new->url }}" target="_blank" class="link">Read more</a></p>
+
+			@endif
 			<span class="more-text">More</span>
 			<p class="hashtag">
 			@foreach($new->hashtags as $hashtag)
-				<a href="/?hashtag={{ $hashtag }}" class="hashtag-link">#{{ $hashtag }}</a>
+				<a href="/?hashtag={{ $hashtag }}" class="hashtag-link link">#{{ $hashtag }}</a>
 			@endforeach
 			</p>
-			<span class="date-new">{{ $new->date }}</span>
+			<span class="date-new">{{ date_format(date_create($new->date), 'd-m-Y') }}</span>
 		</div>
 	@endforeach
 

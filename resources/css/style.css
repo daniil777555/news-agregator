@@ -180,13 +180,13 @@ a{
     float: left;
 }
 
-.hashtag-link {
+.link {
     cursor: pointer;
     text-decoration: none;
     color: blue;
 }
 
-.hashtag-link:hover {
+.link:hover {
     text-decoration: underline;
     color: rgb(42, 22, 221);
 }
@@ -371,4 +371,26 @@ a{
 .btn-logout:hover{
     background-color: rgb(235, 69, 69);
     border-color: rgb(207, 79, 20);
+}
+
+.logs-block{
+    padding: 25px 370px;
+}
+
+.log-block{
+    padding: 20px 25px;
+    border: 2px solid rgb(48, 48, 48);
+    margin-bottom: 35px;
+}
+
+.log-block-field-name{
+    font-size: 24px;
+    color: rgb(114, 113, 113);
+    font-weight: 500;
+}
+
+.log-block-field-value{
+    font-size: 22px;
+    color: rgb(114, 113, 113);
+    font-weight: 400;
 }

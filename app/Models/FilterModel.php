@@ -15,10 +15,11 @@ class FilterModel extends Model
     {
         $newsArr = $arr;
         foreach($request->all() as $key => $val){
-            if(method_exists(new self, $method = $key . "Filter")){
+            if(method_exists($this, $method = $key . "Filter")){
                 $newsArr = $this->$method($newsArr, $val);
             }
         }
+        if(!$request->has("date")) $newsArr = $this->dateFilter($arr, "");
         return $newsArr;
     }
 
