@@ -27,7 +27,7 @@ class ChangeNewsRequest extends FormRequest
             "title" => ["required", "min:3"],
             "newBody" => ["required", "min:10"],
             "hashtags" => ["required", "min:3"],
-            "date" => ["required", "date", "date_format:d.m.Y"]
+            "date" => ["required", "date", "date_format:d-m-Y"]
         ];
     }
 }

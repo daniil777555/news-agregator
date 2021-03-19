@@ -131,7 +131,12 @@ return [
 
     'redis' => [
 
-        'client' => env('REDIS_CLIENT', 'phpredis'),
+        'client' => env('REDIS_CLIENT', 'predis'),
+
+        'driver' => 'redis',
+        'connection' => 'default',
+        'queue' => '{queue}',
+        'retry_after' => 90,
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),

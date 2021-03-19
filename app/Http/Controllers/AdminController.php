@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use \App\Http\Requests\AddNewsRequest;
 use \App\Http\Requests\ChangeNewsRequest;
 use \App\Http\Requests\AdminLoginRequest;
+use \App\Http\Requests\UploadNewsFromStrangeResourceRequest;
 use App\Models\DataBaseModel;
 use App\Models\AdminUsersDBModel;
+use App\Models\ParseLinks;
 use App\Models\Logs;
 use App\Events\Login;
 use App\Events\Logout;
 use App\Events\InteractionWithNews;
+use App\Jobs\Parsing;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -142,7 +145,7 @@ class AdminController extends Controller
         $title = $DBModel::find($id)->title;
         $DBModel->deleteNews($id);
         event(new InteractionWithNews($logs, $request->ip(), $title, "Delete"));
-        return view("administration.admChangeNewsMain", ["news" => $DBModel->getArray()]);
+        // return redirect()->route("administration.");
         
     }
 
@@ -152,9 +155,24 @@ class AdminController extends Controller
         return back();
     }
 
-    public function upload()
+    public function addLinkForParserPage()
     {
         return view("administration.admUploadStrangeNews");
+    }
+
+    public function storeLinkForParser(UploadNewsFromStrangeResourceRequest $request, ParseLinks $parseLinks)
+    {
+        $url = $request->validated();
+        $parseLinks->addLink($url);
+        return back()->with("success", "All is fine");
+    }
+
+    public function startParse(ParseLinks $parseLinks)
+    {
+        foreach($parseLinks->getArray() as $link){
+            Parsing::dispatch($link["link"]);
+        }
+        return back()->with("success", "All is fine");
     }
 
 }

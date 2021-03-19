@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 
 use Jenssegers\Mongodb\Eloquent\Model;
-use \Config;
 
 class DataBaseModel extends Model
 {
@@ -15,31 +15,18 @@ class DataBaseModel extends Model
     protected $fillable = ["images", "title", "newBody", "hashtags", "date"];
     public $timestamps = false;
 
-    protected $array = [];
 
     public function getArray()
     {   
-        if(empty($this->array)) $this->setArray();
-        return $this->array;
-    }
+        return Cache::remember('news', 750, function () {
+            return self::all();
+        });
 
-    protected function setArray()
-    {
-        if(self::all()->isEmpty()) $this->createDB();
-
-        $this->array = self::all();
     }
 
     public function updateNews($id, $data)
     {
         self::find($id)->fill($data)->save();
-    }
-
-    protected function createDB()
-    {
-        foreach(Config::get("newsArray") as $news)
-            self::create($news);
-
     }
 
     public function addNews($data)
@@ -57,7 +44,6 @@ class DataBaseModel extends Model
     public function deleteNews($id)
     {
         self::destroy($id);
-        $this->setArray();
     }
 
     public function deleteImg($elId, $imgId)

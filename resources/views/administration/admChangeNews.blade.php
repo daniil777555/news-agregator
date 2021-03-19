@@ -35,9 +35,19 @@
         <input type="text" name="hashtags" value="{{ $hashtag }}" id="hashtags" class="adm-form-input">
 
         <label for="date" class="adm-form-label add-news-label">Enter date</label>
-        <input type="text" name="date" value="{{ $new->date }}" id="date" class="adm-form-input">
+        <input type="text" name="date" value="{{ date_format(date_create($new->date), 'd-m-Y') }}" id="date" class="adm-form-input">
 
         <button type="submit" class="adm-form-btn">Change a news</button>
     </form>
 
 @endsection
+
+@push('js')
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#newBody' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+@endpush

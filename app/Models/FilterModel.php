@@ -26,11 +26,10 @@ class FilterModel extends Model
     public function hashtagFilter($arr, $value)
     {
         foreach($arr as $key => $val){
-            if (
-                !Str::of($val["title"])->is("*" . $value . "*") 
+            if (!Str::of($val["title"])->is("*" . $value . "*") 
                 && !Str::of(collect($val["hashtags"])->implode(' '))->is("*" . $value . "*") 
             ) { 
-                    $arr = Arr::except($arr, [$key]);
+                $arr = Arr::except($arr, [$key]);
             }
         }
         return $arr;
@@ -38,7 +37,7 @@ class FilterModel extends Model
 
     public function dateFilter($arr, $value)
     {
-        if(count($arr) > 0){
+        if($arr->count() > 1){
             if($value === "oldest") return collect($arr)->sortBy('date')->all();
             return array_reverse(collect($arr)->sortBy('date')->all());
         }

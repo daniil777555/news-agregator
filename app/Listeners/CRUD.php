@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Models\Logs;
 use App\Events\InteractionWithNews;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -34,6 +35,7 @@ class CRUD
             $event->logs->userIP = $event->ip;
             $event->logs->updatedAt = date("Y-m-d H:i:s");;
             $event->logs->save();
+            Cache::pull("news");
         }
     }
 }

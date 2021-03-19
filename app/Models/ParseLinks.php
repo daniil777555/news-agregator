@@ -4,14 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Jenssegers\Mongodb\Eloquent\Model;
-use \Config;
 
-class AdminUsersDBModel extends Model
+class ParseLinks extends Model
 {
     use HasFactory;
 
-    protected $collection = "adminCollection";
-    protected $fillable = ["login", "pass", "status"];
+    protected $collection = "parseLinks";
+
 
     protected $array;
 
@@ -26,11 +25,9 @@ class AdminUsersDBModel extends Model
         $this->array = self::all();
     }
 
-    protected function createDB()
+    public function addLink($url)
     {
-        foreach(Config::get("adminArray") as $user)
-            self::create($user);
-
+        self::insert($url);
     }
 
     protected function deleteCollection()

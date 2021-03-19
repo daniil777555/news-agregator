@@ -5,7 +5,6 @@ use App\Http\Middleware\IsAuthenticate;
 use App\Http\Middleware\CheckStatus;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\UploadNewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +35,7 @@ Route::middleware([IsAuthenticate::class])->group(function () { //Unforchunetly,
         Route::get('/change', [AdminController::class, "newsForChange"])
             ->name("change");
     
-        Route::get('/addURL', [AdminController::class, "upload"])
+        Route::get('/addURL', [AdminController::class, "addLinkForParserPage"])
            ->name("addURL");
 
         Route::get('/logs', [AdminController::class, "showLogs"])
@@ -48,7 +47,11 @@ Route::middleware([IsAuthenticate::class])->group(function () { //Unforchunetly,
         Route::get('/delImg/{elId}/{imgId}', [AdminController::class, "deleteImg"])
             ->name("del-img");
 
-        Route::get('/upload', [UploadNewsController::class, "index"])->name("upload");
+        Route::post('/addingLink', [AdminController::class, "storeLinkForParser"])
+            ->name("addingLink");
+
+        Route::get('/parse', [AdminController::class, "startParse"])
+            ->name("startParsing");
     
         Route::resource('/', AdminController::class, ['parameters' => [
             '' => 'id'

@@ -27,3 +27,13 @@
     </form>
 
 @endsection
+
+@push('js')
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#newBody' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+@endpush
