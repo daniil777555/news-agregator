@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\Parser;
+use App\Services\InteractionWithImage;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(Parser::class, function() {
+			return new Parser();
+		});
+
+        $this->app->bind(InteractionWithImage::class, function() {
+			return new InteractionWithImage();
+		});
     }
 
     /**

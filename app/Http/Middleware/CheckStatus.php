@@ -2,12 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class RedirectIfAuthenticated
+class CheckStatus
 {
     /**
      * Handle an incoming request.
@@ -18,9 +16,12 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next)
     {
-        if (session()->has("login")) {
+        if(!in_array("C", session("status")) && $request->url() === route("administration.create"))
             return redirect()->route("administration.index");
-        }
+
+        if(!in_array("U", session("status")) 
+            && $request->url() === route("administration.show", ["id" => $request->id ?? 0]))
+            return redirect()->route("administration.change");
 
         return $next($request);
     }
