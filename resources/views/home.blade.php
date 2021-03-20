@@ -12,13 +12,21 @@
 					<div class="images-block">
 					@foreach($new->images as $img)
 						<div class="image-block">
-							<img src="{{ $img }}" alt="" class="new-img">
+
+							<img src="{{ 
+								Str::contains($img, "newsImages") ? asset("storage/" . $img) : $img
+							}}" alt="" class="new-img">
+							
 						</div>
 					@endforeach
 					</div>
 			@elseif(count($new->images) === 1)
 				<div class="image-block">
-					<img src="{{ $new->images[0] }}" alt="" class="new-img">
+
+					<img src="{{ 
+						Str::contains($new->images[0], "newsImages") ? asset("storage/" . $new->images[0]) : $new->images[0]
+					}}" alt="" class="new-img">
+
 				</div>
 			@endif
 			<h3 class="new-title">{{ $new->title }}</h3>

@@ -334,8 +334,8 @@ a{
     content: "DELETE";
     position: absolute;
     color: #fff;
-    right: 70px;
-    top: 55px;
+    right: 77px;
+    top: -260%;
     z-index: 2;
 }
 

@@ -26,7 +26,13 @@ class DataBaseModel extends Model
 
     public function updateNews($id, $data)
     {
-        self::find($id)->fill($data)->save();
+        $news = self::find($id);
+        $news->title = $data["title"];
+        $news->newBody = $data["newBody"];
+        $news->images = array_merge($news->images, $data["images"]);
+        $news->date = $data["date"];
+        $news->hashtags = $data["hashtags"];
+        $news->save();
     }
 
     public function addNews($data)
@@ -48,8 +54,10 @@ class DataBaseModel extends Model
 
     public function deleteImg($elId, $imgId)
     {
-        $imgArr = self::find($elId)->images;
+        $news = self::find($elId);
+        $imgArr = $news->images;
         array_splice($imgArr, $imgId, 1);
-        self::find($elId)->update(["images" => $imgArr]);
+        $news->images = $imgArr;
+        $news->save();
     }
 }

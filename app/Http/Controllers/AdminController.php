@@ -14,6 +14,7 @@ use App\Events\Login;
 use App\Events\Logout;
 use App\Events\InteractionWithNews;
 use App\Jobs\Parsing;
+use App\Services\InteractionWithImage;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -69,12 +70,15 @@ class AdminController extends Controller
      * @param  \App\Http\Requests\AddNewsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AddNewsRequest $request, DataBaseModel $DBModel, Logs $logs)
+    public function store(AddNewsRequest $request, DataBaseModel $DBModel, Logs $logs, InteractionWithImage $interactionWithImage)
     {
         $data = collect($request->validated())->only("title", "newBody", "date")->toArray();
-        $data["hashtags"] = explode(" " , $request->hashtags);
-        $data["images"] = [];
-        //to do: adding image (work with file system)
+        $data["hashtags"] = explode("|" , $request->hashtags);
+
+        if(!is_null($interactionWithImage->storeImage($request)))
+            $data["images"] = [$interactionWithImage->storeImage($request)];
+        else  $data["images"] = [];
+
         $DBModel->addNews($data);
         event(new InteractionWithNews($logs, $request->ip(), $data["title"] ,"Store"));
         return back()->with("success", "All is fine");
@@ -91,7 +95,7 @@ class AdminController extends Controller
         if(isset($DBModel->getArray()[$id])){
             return view("administration.admChangeNews", [
                 "new" => $DBModel->getArray()[$id],
-                "hashtag" => implode(" ", $DBModel->getArray()[$id]["hashtags"]),
+                "hashtag" => implode("|", $DBModel->getArray()[$id]["hashtags"]),
             ]);
         }
     }
@@ -124,11 +128,15 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ChangeNewsRequest $request, DataBaseModel $DBModel, $id, Logs $logs)
+    public function update(ChangeNewsRequest $request, DataBaseModel $DBModel, $id, Logs $logs, InteractionWithImage $interactionWithImage)
     {
         $data = collect($request->validated())->only("title", "newBody", "date")->toArray();
-        $data["hashtags"] = explode(" " , $request->hashtags);
-        //to do: adding image (work with file system)
+        $data["hashtags"] = explode("|" , $request->hashtags);
+
+        if(!is_null($interactionWithImage->storeImage($request)))
+            $data["images"] = [$interactionWithImage->storeImage($request)];
+        else  $data["images"] = [];
+
         $DBModel->updateNews($id, $data);
         event(new InteractionWithNews($logs, $request->ip(), $data["title"] ,"Update"));
         return back()->with("success", "All is fine");
@@ -140,18 +148,20 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, DataBaseModel $DBModel, Request $request, Logs $logs)
+    public function destroy($id, DataBaseModel $DBModel, Request $request, Logs $logs, InteractionWithImage $interactionWithImage)
     {
-        $title = $DBModel::find($id)->title;
+        $news = $DBModel::find($id);
         $DBModel->deleteNews($id);
-        event(new InteractionWithNews($logs, $request->ip(), $title, "Delete"));
-        // return redirect()->route("administration.");
-        
+        $interactionWithImage->deleteImages($news->images);
+        event(new InteractionWithNews($logs, $request->ip(), $news->title, "Delete"));
     }
 
-    public function deleteImg($elId, $imgId, DataBaseModel $DBModel)
+    public function deleteImg($elId, $imgId, DataBaseModel $DBModel, Request $request, Logs $logs, InteractionWithImage $interactionWithImage)
     {
+        $news = $DBModel::find($elId);
         $DBModel->deleteImg($elId, $imgId);
+        $interactionWithImage->deleteImage($news->images[$imgId]);
+        event(new InteractionWithNews($logs, $request->ip(), $news->title, "Delete image"));
         return back();
     }
 

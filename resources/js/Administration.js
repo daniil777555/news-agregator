@@ -19,7 +19,6 @@ export class Administration{
             method: 'DELETE',
             body: `${_token}`
         })
-        
-        window.location.reload();
+            .then(() => window.location.reload())
     }
 }

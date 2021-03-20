@@ -45,8 +45,9 @@ var Administration = /*#__PURE__*/function () {
         },
         method: 'DELETE',
         body: "".concat(_token)
+      }).then(function () {
+        return window.location.reload();
       });
-      window.location.reload();
     }
   }]);
 

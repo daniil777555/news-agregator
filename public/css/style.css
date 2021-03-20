@@ -180,13 +180,13 @@ a{
     float: left;
 }
 
-.hashtag-link {
+.link {
     cursor: pointer;
     text-decoration: none;
     color: blue;
 }
 
-.hashtag-link:hover {
+.link:hover {
     text-decoration: underline;
     color: rgb(42, 22, 221);
 }
@@ -287,8 +287,8 @@ a{
 }
 
 .change-news-block{
-    display:flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template: repeat(1, 1fr) / 3fr 1fr;
 }
 
 .link-news-to-update{
@@ -308,6 +308,7 @@ a{
     border-radius: 50%;
     padding: 8px 14px;
     font-weight: 400;
+    max-height: 42.8px;
 }
 
 .delete-news:hover{
@@ -333,8 +334,8 @@ a{
     content: "DELETE";
     position: absolute;
     color: #fff;
-    right: 70px;
-    top: 55px;
+    right: 77px;
+    top: -260%;
     z-index: 2;
 }
 
