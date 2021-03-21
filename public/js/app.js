@@ -1899,11 +1899,15 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+var _require = __webpack_require__(/*! ./Slider */ "./resources/js/Slider.js"),
+    Slider = _require.Slider;
+
 var News = /*#__PURE__*/function () {
   function News() {
     _classCallCheck(this, News);
 
     this.btnMoreCollection = document.querySelectorAll(".more-text");
+    this.slider = new Slider();
     this.init();
   }
 
@@ -1913,6 +1917,7 @@ var News = /*#__PURE__*/function () {
       var _this = this;
 
       this.dateSelector();
+      this.slider.init();
       document.querySelector(".select-sort").addEventListener("change", this.sortByDate);
       this.btnMoreCollection.forEach(function (el) {
         if (el.previousElementSibling.clientHeight < 100) el.style.display = "none";
@@ -1965,6 +1970,125 @@ var News = /*#__PURE__*/function () {
   }]);
 
   return News;
+}();
+
+/***/ }),
+
+/***/ "./resources/js/Slider.js":
+/*!********************************!*\
+  !*** ./resources/js/Slider.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Slider": () => (/* binding */ Slider)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Slider = /*#__PURE__*/function () {
+  function Slider() {
+    _classCallCheck(this, Slider);
+
+    this.imagesBlock = document.querySelectorAll(".images-block");
+    this.isAddedEvents = false; //I do not know exactly why event listener for closing slider is not removed, 
+    //but as I understood it is because Slider object is different from that I bound.
+
+    this.imagesArr = [];
+    this.numOfSelectedImg = 0;
+  }
+
+  _createClass(Slider, [{
+    key: "init",
+    value: function init() {
+      var _this = this;
+
+      this.imagesBlock.forEach(function (el) {
+        return el.addEventListener("click", _this.openSlider.bind(_this));
+      });
+    }
+  }, {
+    key: "openSlider",
+    value: function openSlider(event) {
+      var sliderBlock = null; //These two blocks need for if click will be on the gap between images
+
+      if (event.target.tagName === "IMG") {
+        sliderBlock = event.target.parentNode.parentNode.parentNode;
+        event.target.parentNode.parentNode.classList.add("images-block-in-slider");
+      } else if (event.target.tagName === "DIV") {
+        sliderBlock = event.target.parentNode;
+        event.target.classList.add("images-block-in-slider");
+      }
+
+      sliderBlock.classList.add("images-block-wrapper-to-slider");
+      this.imagesArr = sliderBlock.querySelectorAll(".image-block");
+      this.imagesArr.forEach(function (image, key) {
+        if (key !== 0) image.style.display = "none";
+      });
+      var leftBtn = null;
+      var rightBtn = null;
+
+      if (this.imagesArr.length > 1) {
+        leftBtn = sliderBlock.querySelector(".left");
+        rightBtn = sliderBlock.querySelector(".right");
+        leftBtn.parentNode.classList.remove("slider-btn-none");
+        rightBtn.parentNode.classList.remove("slider-btn-none");
+      }
+
+      this.initSlider(leftBtn, rightBtn, sliderBlock);
+    }
+  }, {
+    key: "initSlider",
+    value: function initSlider(leftBtn, rightBtn, sliderBlock) {
+      if (this.isAddedEvents === false) {
+        if (leftBtn && rightBtn) {
+          leftBtn.addEventListener("click", this.leftClick.bind(this));
+          rightBtn.addEventListener("click", this.rightclick.bind(this));
+        }
+
+        sliderBlock.addEventListener("click", this.closeSlider.bind(this, leftBtn, rightBtn, sliderBlock));
+        this.isAddedEvents = true;
+      }
+
+      return;
+    }
+  }, {
+    key: "leftClick",
+    value: function leftClick() {
+      if (this.numOfSelectedImg !== 0) {
+        this.imagesArr[this.numOfSelectedImg].style.display = "none";
+        this.imagesArr[--this.numOfSelectedImg].style.display = "block";
+      }
+    }
+  }, {
+    key: "rightclick",
+    value: function rightclick() {
+      if (this.numOfSelectedImg !== this.imagesArr.length - 1) {
+        this.imagesArr[this.numOfSelectedImg].style.display = "none";
+        this.imagesArr[++this.numOfSelectedImg].style.display = "block";
+      }
+    }
+  }, {
+    key: "closeSlider",
+    value: function closeSlider(leftBtn, rightBtn, sliderBlock, event) {
+      if (event.target === sliderBlock) {
+        this.imagesArr.forEach(function (image, key) {
+          if (key <= 3) image.style.display = "block";
+        });
+        sliderBlock.classList.remove("images-block-wrapper-to-slider");
+        sliderBlock.querySelector(".images-block").classList.remove("images-block-in-slider");
+        leftBtn.parentNode.classList.add("slider-btn-none");
+        rightBtn.parentNode.classList.add("slider-btn-none");
+      }
+    }
+  }]);
+
+  return Slider;
 }();
 
 /***/ }),

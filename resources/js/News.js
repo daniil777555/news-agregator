@@ -1,11 +1,16 @@
+const {Slider} = require("./Slider");
+
 export class News {
 	constructor(){
 		this.btnMoreCollection = document.querySelectorAll(".more-text");
+		this.slider = new Slider();
 		this.init();
 	}
 
-	init(){
+	init(){		
 		this.dateSelector();
+
+		this.slider.init();
 
 		document.querySelector(".select-sort").addEventListener("change", this.sortByDate);
 

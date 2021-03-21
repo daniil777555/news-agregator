@@ -61,7 +61,7 @@ a{
     flex-direction: column;
 }
 
-.new-block {
+.oneNews-block {
     width: 50vw;
     text-align: center;
     padding: 10px;
@@ -70,16 +70,91 @@ a{
     border-bottom: 1px solid rgba(133, 132, 132, 0.6);
 }
 
-.new-block:last-child {
+.oneNews-block:last-child {
     border: none;
 }
 
-.new-img {
-    max-width: 425px;
-    color: #fff;
+.images-block{
+    cursor: pointer;
+    max-width:600px;
 }
 
-.new-title {
+.images-block-wrapper{
+    display: flex;
+    justify-content: space-between;
+    background: rgba(83, 83, 83, 0.2);
+    padding: 12px;
+    border-radius: 12px
+}
+
+.sub{
+    text-align: end;
+}
+
+.many-images{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 5px;
+}
+
+.image-block-1{
+    grid-row-start: 1;
+    grid-row-end: 4;
+}
+
+.image-block-two-el{
+    grid-row-end: 2;
+}
+
+.hiden-image-block{
+    display: none;
+}
+
+.news-img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.slider-btn-wrapper{
+    display: flex;
+    align-items: center;
+}
+
+.slider-btn{
+    outline: none;
+    cursor: pointer;
+    background: rgb(79, 95, 110);
+    color: #fff;
+    font-size: 27px;
+    padding: 7px 15px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    align-self: center
+}
+
+.slider-btn-none{
+    display: none;
+}
+
+.images-block-wrapper-to-slider{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+    background: rgba(44, 44, 44, 0.95);
+    border-radius: 0px;
+}
+
+.images-block-in-slider{
+    display: block;
+    max-width: 60vw;
+    margin-top: 35px;
+}
+
+.news-title {
     font-size: 23px;
     margin-top: 10px;
     text-align: left;
@@ -87,7 +162,7 @@ a{
     letter-spacing: 2px;
 }
 
-.new-text {
+.news-text {
     font-size: 18px;
     text-align: left;
     margin-bottom: 10px;
@@ -180,6 +255,10 @@ a{
     float: left;
 }
 
+.hashtags{
+    width: 400px;
+}
+
 .link {
     cursor: pointer;
     text-decoration: none;
@@ -191,7 +270,7 @@ a{
     color: rgb(42, 22, 221);
 }
 
-.date-new {
+.date-news {
     text-align: right;
     float: right;
     color: rgb(153, 153, 153);

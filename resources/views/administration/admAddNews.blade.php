@@ -18,7 +18,7 @@
         <textarea name="newBody" id="newBody" cols="50" class="adm-form-input" rows="10"></textarea>
 
         <label for="hashtags" class="adm-form-label add-news-label">Enter hashtags through the "|" and without "#"</label>
-        <input type="text" name="hashtags" id="hashtags" class="adm-form-input">
+        <input type="text" name="hashtags" id="hashtags" class="adm-form-input hashtags">
 
         <label for="date" class="adm-form-label add-news-label">Enter date</label>
         <input type="text" name="date" id="date" value="{{ date("d.m.Y") }}" class="adm-form-input">

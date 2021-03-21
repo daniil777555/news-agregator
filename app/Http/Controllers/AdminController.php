@@ -94,7 +94,7 @@ class AdminController extends Controller
     {
         if(isset($DBModel->getArray()[$id])){
             return view("administration.admChangeNews", [
-                "new" => $DBModel->getArray()[$id],
+                "oneNews" => $DBModel->getArray()[$id],
                 "hashtag" => implode("|", $DBModel->getArray()[$id]["hashtags"]),
             ]);
         }

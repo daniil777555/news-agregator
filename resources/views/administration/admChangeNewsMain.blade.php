@@ -7,13 +7,13 @@
 @section("content")
 
     @csrf
-    @foreach($news as $key => $new)
+    @foreach($news as $key => $oneNews)
         <div class="change-news-block">
             <a href="{{ route('administration.show', ['id' => $key]) }}" class="link-news-to-update">
-                {{ $new->title }} {{ $new->date }}
+                {{ $oneNews->title }} {{ $oneNews->date }}
             </a>
             @if(in_array("D", session("status")))
-                <button value="{{ $new->id }}" class="delete-news">X</button>
+                <button value="{{ $oneNews->id }}" class="delete-news">X</button>
             @endif  
         </div>
     @endforeach

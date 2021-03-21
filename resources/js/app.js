@@ -2,7 +2,6 @@ const { News } = require("./News");
 
 export class App {
     constructor() {
-
 		this.main();
 		this.news = new News();
 	}

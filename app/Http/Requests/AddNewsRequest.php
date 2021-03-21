@@ -26,7 +26,6 @@ class AddNewsRequest extends FormRequest
         return [
             "title" => ["required", "min:3"],
             "newBody" => ["required", "min:10"],
-            "hashtags" => ["required", "min:3"],
             "date" => ["required", "date", "date_format:d.m.Y"]
         ];
     }
